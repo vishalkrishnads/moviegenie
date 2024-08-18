@@ -29,13 +29,13 @@ const lightTheme: ThemeColors = {
   onPrimary: palette.white,
   secondary: "rgb(224 225 249)",
   onSecondary: palette.black,
-  tertiary: palette.lightPurple,
+  tertiary: "rgb(204 51 255)",
   onTertiary: palette.black,
   background: palette.white,
   onBackground: palette.black,
   surface: palette.grey,
   onSurface: palette.black,
-  error: palette.red,
+  error: "rgb(255 26 26)",
   onError: palette.white,
 };
 
@@ -44,13 +44,13 @@ const darkTheme: ThemeColors = {
   onPrimary: palette.black,
   secondary: "rgb(34 34 43)",
   onSecondary: palette.white,
-  tertiary: palette.darkPurple,
+  tertiary: "rgb(115 0 153)",
   onTertiary: palette.white,
   background: "rgb(19 19 24)",
   onBackground: palette.white,
   surface: palette.black,
   onSurface: palette.white,
-  error: palette.red,
+  error: "rgb(204 0 0)",
   onError: palette.white,
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as Progress from 'react-native-progress';
 import { View, FlatList, Dimensions } from 'react-native';
 import { scale, useOrientation, isTablet } from '@/assets/utils/responsive';
@@ -15,7 +15,7 @@ const MovieListScreen = () => {
     const theme = useTheme()
     const orientation = useOrientation()
 
-    const { state, dispatch, fetchMovies } = useMovieContext()
+    const { state, fetchMovies } = useMovieContext()
     const [loading, setLoading] = useState(false);
 
     const loadMoreMovies = () => {

@@ -4,6 +4,7 @@ import { getGenres } from '@/api/genre';
 import { search } from '@/api/search';
 import * as api from '@/api/list';
 import * as cache from '@/api/cache';
+import { useRouter } from 'expo-router';
 
 export type MovieState = {
     trending: cache.CacheFormat;
@@ -76,6 +77,7 @@ const MovieContext = createContext<{
 
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [state, dispatch] = useReducer(movieReducer, initialState);
+    const router = useRouter()
 
     const fetchGenres = async () => {
         try {
@@ -90,51 +92,55 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         let data: TMDBResponse;
         let cacheData: cache.CacheFormat | null;
 
-        switch (filter) {
-            case 'trending':
-                cacheData = await cache.getTrendingMovies();
-                if (cacheData && cacheData.page >= page) {
-                    dispatch({ type: 'SET_MOVIES', payload: { key: 'trending', data: cacheData } });
-                    return;
-                }
-                data = await api.trendingMovies(page);
-                cache.setTrendingMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
-                break;
-            case 'upcoming':
-                cacheData = await cache.getUpcomingMovies();
-                if (cacheData && cacheData.page >= page) {
-                    dispatch({ type: 'SET_MOVIES', payload: { key: 'upcoming', data: cacheData } });
-                    return;
-                }
-                data = await api.upcomingMovies(page);
-                cache.setUpcomingMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
-                break;
-            case 'nowPlaying':
-                cacheData = await cache.getNowPlayingMovies();
-                if (cacheData && cacheData.page >= page) {
-                    dispatch({ type: 'SET_MOVIES', payload: { key: 'nowPlaying', data: cacheData } });
-                    return;
-                }
-                data = await api.nowPlayingMovies(page);
-                cache.setNowPlayingMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
-                break;
-            case 'topRated':
-                cacheData = await cache.getTopRatedMovies();
-                if (cacheData && cacheData.page >= page) {
-                    dispatch({ type: 'SET_MOVIES', payload: { key: 'topRated', data: cacheData } });
-                    return;
-                }
-                data = await api.topRatedMovies(page);
-                cache.setTopRatedMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
-                break;
-            default:
-                data = { results: [], page: 0, total_pages: 0, total_results: 0 }
-        }
+        try {
+            switch (filter) {
+                case 'trending':
+                    cacheData = await cache.getTrendingMovies();
+                    if (cacheData && cacheData.page >= page) {
+                        dispatch({ type: 'SET_MOVIES', payload: { key: 'trending', data: cacheData } });
+                        return;
+                    }
+                    data = await api.trendingMovies(page);
+                    cache.setTrendingMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
+                    break;
+                case 'upcoming':
+                    cacheData = await cache.getUpcomingMovies();
+                    if (cacheData && cacheData.page >= page) {
+                        dispatch({ type: 'SET_MOVIES', payload: { key: 'upcoming', data: cacheData } });
+                        return;
+                    }
+                    data = await api.upcomingMovies(page);
+                    cache.setUpcomingMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
+                    break;
+                case 'nowPlaying':
+                    cacheData = await cache.getNowPlayingMovies();
+                    if (cacheData && cacheData.page >= page) {
+                        dispatch({ type: 'SET_MOVIES', payload: { key: 'nowPlaying', data: cacheData } });
+                        return;
+                    }
+                    data = await api.nowPlayingMovies(page);
+                    cache.setNowPlayingMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
+                    break;
+                case 'topRated':
+                    cacheData = await cache.getTopRatedMovies();
+                    if (cacheData && cacheData.page >= page) {
+                        dispatch({ type: 'SET_MOVIES', payload: { key: 'topRated', data: cacheData } });
+                        return;
+                    }
+                    data = await api.topRatedMovies(page);
+                    cache.setTopRatedMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
+                    break;
+                default:
+                    data = { results: [], page: 0, total_pages: 0, total_results: 0 }
+            }
 
-        dispatch({
-            type: 'SET_MOVIES',
-            payload: { key: filter, data: { movies: data.results, page: data.page, total_pages: data.total_pages } },
-        });
+            dispatch({
+                type: 'SET_MOVIES',
+                payload: { key: filter, data: { movies: data.results, page: data.page, total_pages: data.total_pages } },
+            });
+        } catch {
+            router.replace("/help")
+        }
     };
 
     const searchMovies = async (query: string, page: number): Promise<cache.CacheFormat> => {
