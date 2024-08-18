@@ -3,8 +3,9 @@ import { StyleSheet, View, ScrollView, TextInput, Text, Pressable } from "react-
 import { useTheme } from "@/assets/utils/theme"
 import { isTablet, scale, useOrientation } from "@/assets/utils/responsive"
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMovieContext, MovieState } from "@/contexts/MovieContext";
+import { useNavigation, useRouter } from "expo-router";
 
 const filterLabels: Record<MovieState['currentFilter'], string> = {
     trending: 'Trending',
@@ -17,6 +18,7 @@ export const Bar = () => {
     const styles = useStyles();
     const theme = useTheme();
     const orientation = useOrientation();
+    const router = useRouter()
     const { state, dispatch } = useMovieContext();
 
     const filters: Array<MovieState['currentFilter']> = ['trending', 'upcoming', 'nowPlaying', 'topRated'];
@@ -27,7 +29,7 @@ export const Bar = () => {
 
     return (
         <View style={styles.searchBarContainer}>
-            <Pressable style={styles.searchBar}>
+            <Pressable onPress={() => router.push("/search")} style={styles.searchBar}>
                 <TextInput
                     style={styles.searchInput}
                     placeholder="Search movies..."
@@ -63,21 +65,31 @@ export const Bar = () => {
     );
 };
 
-export const Search = () => {
+type Props = { onSearch: (query: string) => void }
+export const Search = ({ onSearch }: Props) => {
     const styles = useStyles()
     const theme = useTheme()
     const orientation = useOrientation()
+    const navigation = useNavigation()
 
     const [query, setQuery] = useState('')
 
+    useEffect(() => {
+        if(query) onSearch(query)
+    }, [query])
+
     return <View style={styles.searchBarContainer}>
         <View style={styles.searchBar}>
+            <Pressable onPress={() => navigation.goBack()} style={{ flex: orientation === 'landscape' ? 1 : 2, justifyContent: 'center', alignItems: 'center' }}>
+                <AntDesign name="left" size={scale(15)} color={theme.colors.onSecondary} />
+            </Pressable>
             <TextInput
-                style={styles.searchInput}
-                placeholder="Search movies..."
+                style={[styles.searchInput, { paddingLeft: 0 }]}
+                placeholder="Search by name"
                 placeholderTextColor={theme.colors.onSecondary}
                 value={query}
                 onChangeText={value => setQuery(value)}
+                autoFocus
                 returnKeyType="search"
             />
             <Pressable onPress={() => setQuery('')} style={{ flex: orientation === 'landscape' ? 1 : 2, justifyContent: 'center', alignItems: 'center' }}>

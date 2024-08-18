@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { TMDBResponse, Movie, Genre, Genres } from '@/constants/types';
 import { getGenres } from '@/api/genre';
+import { search } from '@/api/search';
 import * as api from '@/api/list';
 import * as cache from '@/api/cache';
 
@@ -9,20 +10,23 @@ export type MovieState = {
     upcoming: cache.CacheFormat;
     nowPlaying: cache.CacheFormat;
     topRated: cache.CacheFormat;
+    searchResults: cache.CacheFormat;
     genres: Genre[];
-    currentFilter: 'trending' | 'upcoming' | 'nowPlaying' | 'topRated';
+    currentFilter: 'trending' | 'upcoming' | 'nowPlaying' | 'topRated' | 'searchResults';
 };
 
 type MovieAction =
     | { type: 'SET_MOVIES'; payload: { key: keyof MovieState; data: cache.CacheFormat } }
     | { type: 'SET_FILTER'; payload: MovieState['currentFilter'] }
-    | { type: 'SET_GENRES', payload: Genre[] };
+    | { type: 'SET_GENRES', payload: Genre[] }
+    | { type: 'SET_SEARCH_RESULTS'; payload: cache.CacheFormat };
 
 const initialState: MovieState = {
     trending: { movies: [], page: 1, total_pages: 1 },
     upcoming: { movies: [], page: 1, total_pages: 1 },
     nowPlaying: { movies: [], page: 1, total_pages: 1 },
     topRated: { movies: [], page: 1, total_pages: 1 },
+    searchResults: { movies: [], page: 1, total_pages: 1 },
     genres: [],
     currentFilter: 'nowPlaying',
 };
@@ -51,6 +55,12 @@ const movieReducer = (state: MovieState, action: MovieAction): MovieState => {
             return { ...state, currentFilter: action.payload };
         case 'SET_GENRES':
             return { ...state, genres: action.payload };
+        case 'SET_SEARCH_RESULTS':
+            return {
+                ...state,
+                searchResults: action.payload,
+                currentFilter: 'searchResults',
+            };
         default:
             return state;
     }
@@ -61,6 +71,7 @@ const MovieContext = createContext<{
     state: MovieState;
     dispatch: React.Dispatch<MovieAction>;
     fetchMovies: (filter: MovieState['currentFilter'], page: number) => Promise<void>;
+    searchMovies: (query: string, page: number) => Promise<cache.CacheFormat>;
 } | undefined>(undefined);
 
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -116,6 +127,8 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 data = await api.topRatedMovies(page);
                 cache.setTopRatedMovies({ movies: data.results, page: data.page, total_pages: data.total_pages });
                 break;
+            default:
+                data = { results: [], page: 0, total_pages: 0, total_results: 0 }
         }
 
         dispatch({
@@ -124,13 +137,37 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         });
     };
 
+    const searchMovies = async (query: string, page: number): Promise<cache.CacheFormat> => {
+        try {
+            const data: TMDBResponse = await search(query, page);
+            const searchResults: cache.CacheFormat = {
+                movies: data.results,
+                page: data.page,
+                total_pages: data.total_pages,
+            };
+
+            if (page === 1) {
+                dispatch({ type: 'SET_SEARCH_RESULTS', payload: searchResults });
+            } else {
+                dispatch({
+                    type: 'SET_MOVIES',
+                    payload: { key: 'searchResults', data: searchResults },
+                });
+            }
+
+            return searchResults;
+        } catch (error) {
+            throw error;
+        }
+    };
+
     useEffect(() => {
         fetchGenres();
         fetchMovies(state.currentFilter, 1);
     }, [state.currentFilter]);
 
     return (
-        <MovieContext.Provider value={{ state, dispatch, fetchMovies }}>
+        <MovieContext.Provider value={{ state, dispatch, fetchMovies, searchMovies }}>
             {children}
         </MovieContext.Provider>
     );

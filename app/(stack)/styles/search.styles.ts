@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { createStyles } from '@/assets/utils/theme';
+import { StyleSheet } from "react-native";
+import { createStyles } from "@/assets/utils/theme";
 
 export default createStyles((theme) => StyleSheet.create({
     container: {
@@ -8,8 +8,5 @@ export default createStyles((theme) => StyleSheet.create({
         backgroundColor: theme.colors.background,
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    listContainer: {
-        paddingHorizontal: theme.spacing.s,
     }
-}));
+}))
