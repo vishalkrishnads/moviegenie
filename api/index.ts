@@ -76,3 +76,9 @@ export async function makeRequest<T>(request: Request): Promise<T> {
 }
 
 export const image = (path: string): string => `https://image.tmdb.org/t/p/original${path}`
+
+export const formatReleaseDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
+};

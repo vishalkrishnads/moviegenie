@@ -1,23 +1,42 @@
 import { verticalScale } from "@/assets/utils/responsive"
-import { createStyles, useTheme } from "@/assets/utils/theme"
+import { createStyles } from "@/assets/utils/theme"
 import { scale } from "@/assets/utils/responsive"
 import { StyleSheet, Text, View } from "react-native"
+import { useMovieContext } from "@/contexts/MovieContext"
 
-const Genres = () => {
-    const styles = useStyles()
-    const theme = useTheme()
+type Props = {
+    genres_id: number[];
+};
 
-    const Genre = () => {
-        return <View style={styles.genre}>
-            <Text style={styles.name}>Adventure</Text>
+const Genres = ({ genres_id }: Props) => {
+    const styles = useStyles();
+    const { genres } = useMovieContext().state;
+
+    const getGenreName = (id: number) => {
+        const genre = genres.find((g) => g.id === id);
+        return genre ? genre.name : null;
+    };
+
+    const Genre = ({ name }: { name: string }) => {
+        return (
+            <View style={styles.genre}>
+                <Text style={styles.name}>{name}</Text>
+            </View>
+        );
+    };
+
+    return (
+        <View style={styles.root}>
+            {genres_id
+                .map((id) => getGenreName(id))
+                .filter((name) => name !== null)
+                .map((name, index) => (
+                    <Genre key={index} name={name!} />
+                ))}
         </View>
-    }
+    );
+};
 
-    return <View style={styles.root}>
-        <Genre />
-        <Genre />
-    </View>
-}
 
 const useStyles = createStyles((theme) => StyleSheet.create({
     root: {

@@ -7,6 +7,8 @@ export default createStyles((theme) => StyleSheet.create({
         flex: 1,
         padding: 0,
         backgroundColor: theme.colors.background,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     listContainer: {
         paddingHorizontal: theme.spacing.s,
@@ -31,7 +33,8 @@ export default createStyles((theme) => StyleSheet.create({
     },
     cardDetails: {
         flex: 3,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingRight: scale(5)
     },
 
     poster: {
