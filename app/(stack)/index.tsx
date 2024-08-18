@@ -39,8 +39,9 @@ const MovieListScreen = () => {
                         <View style={styles.cardPoster}>
                             <Image
                                 style={styles.poster}
-                                placeholder={{ blurhash }}
+                                placeholder={theme.isDark ? require('@/assets/images/pacman-dark.gif') : require('@/assets/images/pacman-light.gif')}
                                 source={image(movie.poster_path)}
+                                autoplay
                             />
                         </View>
                         <View style={styles.cardDetails}>

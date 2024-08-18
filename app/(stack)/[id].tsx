@@ -38,7 +38,9 @@ const MovieDetailScreen = () => {
                 <View style={styles.backdrop}>
                     <Image
                         style={styles.poster}
+                        placeholder={theme.isDark ? require('@/assets/images/pacman-dark.gif') : require('@/assets/images/pacman-light.gif')}
                         source={image(movie.poster_path)}
+                        autoplay
                     />
                 </View>
             </View>
