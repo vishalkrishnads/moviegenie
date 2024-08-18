@@ -122,6 +122,7 @@ const useStyles = createStyles((theme) => StyleSheet.create({
     filter: {
         borderWidth: scale(2),
         borderColor: theme.colors.secondary,
+        backgroundColor: theme.colors.background,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: scale(2),
