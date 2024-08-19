@@ -133,11 +133,13 @@ This section walks you through the process of setting up a development environme
     $ git pull origin main
     ```
 
-3. Install all dependencies
-
-    ```bash
-    $ npm install
+3. Create a `.env` file at the project root and put these contents in it
+    
+    ```env
+    EXPO_PUBLIC_BASE_URL=https://api.themoviedb.org/3
+    EXPO_PUBLIC_AUTH_KEY=<your_tmdb_auth_key>
     ```
+   You can get your key by signing up on the [TMDB dev page](https://developer.themoviedb.org/) and visiting [this page](https://developer.themoviedb.org/reference/intro/authentication) in your browser.
 
 4. Install all the dependencies
 
