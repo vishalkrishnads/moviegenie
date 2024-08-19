@@ -28,10 +28,44 @@ This section details the design choices made for the app's UI and codebase. If y
 ### List screen
 The list screen is the first one that greets the user when the app loads. For this, I decided to go with a grid like cards layout that would be responsive across various devices. For instance, a tablet could show more movies at once with this layout whereas a phone could show fewer ones but in a detailed manner. As the screen size increases, the number of movies shown at once will increase as well.
 
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/68216d8f-0037-44d1-b583-0d676f7e13bb">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/b159bf72-8eff-414e-9496-ea7565976922">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/d460b9cd-30c1-4b78-bb79-29fd48c910c3">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/019b4654-e447-4eea-b0c0-03ef0fb16712">
+    </td>
+  </tr>
+</table>
+
+*the list screen as seen in mobile (dark mode) & tablet (light mode)*
+
 A search bar would be present at the top of this screen that navigates to a separate search screen for searching movies. In both of these screens, movies are shown as cards. Each card shows the movie's name, title, release date, rating, genres & popularity. Ratings are converted from a 10 point scale to a 5 point scale and shown in terms of 5 stars for easy grasp. The popularity is shown as a simple progress bar.
 
 ### Details screen
 This screen is where you can read more about a specific movie. The design choices for this have been pretty straightforward. The design is made responsive based on the orientation only.
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/1f68319b-37f7-4e7a-b1ef-d17a13e90960">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/55f4ee62-10e6-4bea-a916-bee9f5e1224c">
+    </td>
+  </tr>
+</table>
+
+*the details screen in portrait & landscape. this is the same for tablets as well.*
 
 There are two sections: the top one showing the backdrop image of the selected movie and the bottom section showing the details and description. In portrait mode, these sections are shown as is. In landscape orientation, the top section assumes the left half of the screen and the bottom section assumes the right half. This works well on larger screens so I didn't feel the need to over engineer it.
 
