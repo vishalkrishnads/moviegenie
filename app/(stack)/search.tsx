@@ -22,6 +22,8 @@ const SearchScreen = () => {
 
     const { state, dispatch, searchMovies } = useMovieContext();
     
+    // fix for a small logical bug. since searchResults is treated as a filter in the context,
+    // the list screen shows search results when navigating back. this forces the filter to be reset
     useEffect(() => { 
         navigation.addListener('beforeRemove', (e) => {
             e.preventDefault();
@@ -30,6 +32,7 @@ const SearchScreen = () => {
         });
     }, []);
 
+    // helper function to search
     const handleSearch = async (searchQuery: string) => {
         setLoading(true);
         setQuery(searchQuery);
@@ -43,6 +46,7 @@ const SearchScreen = () => {
         }
     };
 
+    // helper function for infinite scroll
     const loadMoreMovies = async () => {
         if (!loading && query) {
             setLoading(true);
@@ -58,6 +62,8 @@ const SearchScreen = () => {
         }
     };
 
+    // logic for adjusting columns based on orientation
+    // repeats in list screen, can be refactored
     const screenWidth = Dimensions.get('window').width;
     const getNumColumns = () => {
         if (isTablet()) {

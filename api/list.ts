@@ -1,6 +1,11 @@
 import { makeRequest, Request } from "."
 import { TMDBResponse } from "@/constants/types"
 
+/*
+    All the endpoints which return data as a list are unified here for easy access.
+    Basically, all the data being shown on the list page are pulled using these.
+*/
+
 const request = async(endpoint: string, page: number): Promise<TMDBResponse> => {
     const request: Request = {
         url: endpoint,

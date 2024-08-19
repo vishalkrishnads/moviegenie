@@ -1,6 +1,11 @@
 import { storeData, getData } from "@/assets/utils/cache";
 import { Movie } from "@/constants/types";
 
+/*
+  Unified interface with helper functions for using the cache.
+  It provides methods for storing the different movies based on category.
+*/
+
 export type CacheFormat = {
     movies: Movie[],
     page: number,

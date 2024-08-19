@@ -24,6 +24,7 @@ const MovieDetailScreen = () => {
     const { id } = useLocalSearchParams<{ id: string }>();
     const { state } = useMovieContext();
 
+    // finds the movie by id from the stack, pretty straightforward
     const movie: Movie = state[state.currentFilter].movies.find((m) => m.id === parseInt(id));
 
     return (
