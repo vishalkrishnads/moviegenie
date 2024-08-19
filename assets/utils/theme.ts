@@ -3,6 +3,11 @@ import * as NavigationBar from 'expo-navigation-bar';
 import { scale, moderateScale } from './responsive';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 
+/*
+  This file handles the theme changes, provides a hook for consumers to track the theme changes,
+  and takes care of the theming of the navbar and status bar.
+*/
+
 const palette = {
   white: 'rgb(251 248 255)',
   black: "#000000",

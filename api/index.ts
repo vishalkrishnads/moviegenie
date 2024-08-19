@@ -1,3 +1,8 @@
+/*
+    Unified interface for network calls with the TMDB API.
+    Manages adding the auth token, headers, etc, making the request and parsing the response,
+*/
+
 export interface Request<T = unknown> {
     url: string;
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -75,8 +80,10 @@ export async function makeRequest<T>(request: Request): Promise<T> {
     }
 }
 
+// helper function to generate the image URL
 export const image = (path: string): string => `https://image.tmdb.org/t/p/original${path}`
 
+// helper function to format the release date
 export const formatReleaseDate = (dateString: string): string => {
     const date = new Date(dateString);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

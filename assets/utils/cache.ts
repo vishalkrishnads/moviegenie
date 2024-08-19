@@ -1,6 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CacheFormat } from '@/api/cache';
 
+/*
+    Helper methods to store and get data to & from the cache 
+*/
+
 export type Keys = {
     key: 'popular' | 'trending' | 'topRated' | 'nowPlaying' | 'upcoming';
 }

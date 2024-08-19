@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { TMDBResponse, Movie, Genre, Genres } from '@/constants/types';
+import { TMDBResponse, Genre, Genres } from '@/constants/types';
 import { getGenres } from '@/api/genre';
 import { search } from '@/api/search';
 import * as api from '@/api/list';
@@ -88,11 +88,15 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         }
     };
 
+    // function that fetches movies based on the currently selected filter
     const fetchMovies = async (filter: MovieState['currentFilter'], page: number) => {
         let data: TMDBResponse;
         let cacheData: cache.CacheFormat | null;
 
         try {
+            // match the filter, get the existing data from cache,
+            // query the api to see if therre's something new, and finally append the new results to cache
+            // after setting it in the state for the ui
             switch (filter) {
                 case 'trending':
                     cacheData = await cache.getTrendingMovies();
@@ -152,9 +156,12 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 total_pages: data.total_pages,
             };
 
+            // if this is the first page, then set the results to be the search results themselves
             if (page === 1) {
                 dispatch({ type: 'SET_SEARCH_RESULTS', payload: searchResults });
             } else {
+                // otherwise, append it to the overall movies state,
+                // so that the details screen can access it if the user taps on it
                 dispatch({
                     type: 'SET_MOVIES',
                     payload: { key: 'searchResults', data: searchResults },

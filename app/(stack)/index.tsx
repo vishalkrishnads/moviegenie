@@ -16,8 +16,9 @@ const MovieListScreen = () => {
     const orientation = useOrientation()
 
     const { state, fetchMovies } = useMovieContext()
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
+    // utility function for infinite scroll. just appends the page number and loads more movies
     const loadMoreMovies = () => {
         if (!loading && state[state.currentFilter].page < state[state.currentFilter].total_pages) {
             setLoading(true);
@@ -25,6 +26,8 @@ const MovieListScreen = () => {
         }
     };
 
+    // logic for adjusting number of cards based on orientation
+    // this repeats in the search screen, can be refactored
     const screenWidth = Dimensions.get('window').width;
     const getNumColumns = () => {
         if (isTablet()) {
@@ -50,7 +53,7 @@ const MovieListScreen = () => {
                 renderItem={renderItem}
                 contentContainerStyle={[styles.listContainer, { paddingTop: scale(90) }]}
                 key={numColumns} // Force re-render on orientation change
-                onEndReached={loadMoreMovies}
+                onEndReached={loadMoreMovies} // trigger for infinite scroll
                 onEndReachedThreshold={0.5}
             />
             {loading && <Progress.Bar

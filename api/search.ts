@@ -1,6 +1,7 @@
 import { TMDBResponse } from "@/constants/types"
 import { makeRequest, Request } from "."
 
+// function to search the movie db using the /search/movie endpoint
 export async function search (query: string, page: number): Promise<TMDBResponse> {
     if(!query) throw Error("search query itself can't be an empty string")
 
