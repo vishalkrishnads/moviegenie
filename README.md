@@ -1,7 +1,7 @@
 <img src="https://github.com/user-attachments/assets/0183479c-43eb-48cc-bc01-9401bd20fca7" alt="moviegenie" width="250" align="right">
 
-# moviegenie
-A simple app that interacts with the [TMDB API](https://developer.themoviedb.org/reference) to present you with a never ending list of movies to watch from. You can try it on android now by downloading the apk from the releases page!
+# moviegenie 🎥
+A simple app that interacts with the [TMDB API](https://developer.themoviedb.org/reference) to present you with a never ending list of movies to watch from. You can try it on android now by downloading the apk from the [releases page](https://github.com/vishalkrishnads/moviegenie/releases/tag/v0.1)! :tada:
 
 > :warning: Government Of India has been known to block TMDB in the country. If for some reason, you don't see an active loading animation or any movies, please try connecting to a VPN and relaunching the app. If you're confused, [Proton VPN](https://protonvpn.com/) might be a good one to start with.
 
@@ -62,7 +62,7 @@ Overall, the all the requirements have been satisfied.
 * Infinite scroll works for both the movie list and search screens. You can scroll to the bottom of the list to load more movies.
 
 ## Setup Guide
-This section walks you through the process of setting up a development environment and launching this app on your machine. If you'd rather just try out this app, it'd be enough to download the APK from the releases page. This guide covers the instructions for android. If you have a macOS device, it'd be enough to use the [Expo Go](https://expo.dev/client) app and scan the QR from the terminal.
+This section walks you through the process of setting up a development environment and launching this app on your machine. If you'd rather just try out this app, it'd be enough to download the APK from the [releases page](https://github.com/vishalkrishnads/moviegenie/releases/tag/v0.1). This guide covers the instructions for android. If you have a macOS device, it'd be enough to use the [Expo Go](https://expo.dev/client) app and scan the QR from the terminal.
 
 ### Prerequisites
 1. NodeJS & NPM
