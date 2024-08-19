@@ -85,7 +85,7 @@ In short,
 
 * The app is compatible with both android & iOS. No libraries specific to any one OS have been used in the project. The UI design also takes into consideration the aesthetic requirements for both operating systems.
 * All the functionality stated as the requirements work. In India, the app might need to be connected to a VPN for the API to function properly as it may be blocked.
-* There are two screens as stated, and they are linked together using a react context
+* There are two screens as stated, and they are linked together using a react context. There is a cache for network requests built using [`@react-native-async-storage/async-storage`](https://github.com/react-native-async-storage/async-storage) to make the app feel less laggy.
 
 Overall, the all the requirements have been satisfied.
 
