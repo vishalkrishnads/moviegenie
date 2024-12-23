@@ -19,7 +19,6 @@ This is my submission for the [hiring challenge](https://buymeacoffee.notion.sit
 * [Setup Guide](#setup-guide)
    * [Prerequisites](#prerequisites)
    * [Build From Source](#build-from-source)
-   * [Installation Instructions](#installation-instructions)
 * [Contributing](#contributing)
 
 ## Design Choices
@@ -71,10 +70,11 @@ There are two sections: the top one showing the backdrop image of the selected m
 
 ### Codebase
 This codebase relies on a [react context](https://react.dev/reference/react/hooks#context-hooks)(not redux) to do all the networking and caching stuff. It's summarized below:
-    * On launch, the context loads the list of genres from the [`/genre/movie/list`](https://developer.themoviedb.org/reference/genre-movie-list) endpoint and stores it in the state.
-    * After this, it loads the movies. If the network request fails, it immediately redirects the user to the help screen asking them to use a VPN.
-    * The movies are loaded based on a couple of filters, all based directly from the endpoints provided by the TMDB API (see the left navbar on [this](https://developer.themoviedb.org/reference/movie-now-playing-list) for all the various movie lists) and stores these in the state as well.
-    * When the user clicks on a movie, the app navigates to the details screen to show the movie's details. This screen pulls the movie from the context's state using the id and displays it.
+
+  * On launch, the context loads the list of genres from the [`/genre/movie/list`](https://developer.themoviedb.org/reference/genre-movie-list) endpoint and stores it in the state.
+  * After this, it loads the movies. If the network request fails, it immediately redirects the user to the help screen asking them to use a VPN.
+  * The movies are loaded based on a couple of filters, all based directly from the endpoints provided by the TMDB API (see the left navbar on [this](https://developer.themoviedb.org/reference/movie-now-playing-list) for all the various movie lists) and stores these in the state as well.
+  * When the user clicks on a movie, the app navigates to the details screen to show the movie's details. This screen pulls the movie from the context's state using the id and displays it.
 Overall, the code structure is pretty straightforward and easy to understand. All best practices have been followed and there isn't much complexity.
 
 ## What works?
@@ -119,7 +119,7 @@ This section walks you through the process of setting up a development environme
 4. A VPN (if you're in India)
     > The Govt. Of India has been known to block TMDB in the country. So, if you're in India, use a VPN like [Proton VPN](https://protonvpn.com/) to reroute your traffic through another country.
 
-### Installation instructions
+### Build from source
 1. Make a new directory and change into it
    
     ```bash
